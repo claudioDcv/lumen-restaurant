@@ -16,4 +16,8 @@ class Cliente extends Model
     protected $fillable = [];
 
     protected $hidden = [];
+
+    public function reservas() {
+        return $this->hasMany('App\Reserva');
+    }
 }

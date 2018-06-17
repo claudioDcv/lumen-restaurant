@@ -32,7 +32,12 @@ class ProductoController extends Controller {
 
     public function show($id)
     {
-        return 'show';
+        $model = Producto::find($id);
+
+        if($model == null) {
+            return ['result' => $id . ' Not Found'];
+        }
+        return $model;
     }
 
     public function update($id)

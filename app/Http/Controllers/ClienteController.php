@@ -32,7 +32,12 @@ class ClienteController extends Controller {
 
     public function show($id)
     {
-        return 'show';
+        $model = Cliente::find($id);
+
+        if($model == null) {
+            return ['result' => $id . ' Not Found'];
+        }
+        return $model;
     }
 
     public function update($id)
