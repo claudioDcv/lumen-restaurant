@@ -22,4 +22,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     make_router($router, 'productos', 'ProductoController');
     make_router($router, 'reservas', 'ReservaController');
 
+    $router->get('pedidos-por-reserva/{id:[0-9]+}', 'PedidoController@showPorReserva');
+
+    $router->get('reserva-por-nombre-cliente', 'ReservaController@buscarPorCliente');
+
 });

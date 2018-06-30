@@ -15,16 +15,14 @@ class PedidoController extends Controller {
     {
 
         $this->validate($request, [
-            'name' => 'required|unique:events',
-            'date' => 'required',
-            'capacity' => 'required',
+            'producto_id' => 'required',
+            'reserva_id' => 'required',
         ]);
         
 
         $model = new Pedido();
-        $model->name = $request->input('name');
-        $model->date = $request->input('date');
-        $model->capacity = $request->input('capacity');
+        $model->producto_id = $request->input('producto_id');
+        $model->reserva_id = $request->input('reserva_id');
         $model->save();
  
     	return response()->json($model);
@@ -33,6 +31,16 @@ class PedidoController extends Controller {
     public function show($id)
     {
         $model = Pedido::find($id);
+
+        if($model == null) {
+            return ['result' => $id . ' Not Found'];
+        }
+        return $model;
+    }
+
+    public function showPorReserva($id)
+    {
+        $model = Pedido::where('reserva_id', $id)->with('producto', 'reserva', 'reserva.mesa', 'reserva.cliente')->get();
 
         if($model == null) {
             return ['result' => $id . ' Not Found'];
@@ -55,5 +63,4 @@ class PedidoController extends Controller {
             'result' => $model->delete()
         ]);    
     }
-
 }

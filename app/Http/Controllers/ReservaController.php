@@ -71,6 +71,15 @@ class ReservaController extends Controller {
         ];
     }
 
+    public function buscarPorCliente(Request $request) {
+
+        $nombre = $request->input('nombre');
+
+        return Reserva::with('cliente', 'mesa')->whereHas('cliente', function ($q) use ($nombre) {
+            $q->where('nombre', 'like', '%' . $nombre . '%');
+         })->get();
+    }
+
     public function update(Request $request, $id)
     {
         $mesa_id = $request->input('mesa_id');
